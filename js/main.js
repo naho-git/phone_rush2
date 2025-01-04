@@ -161,7 +161,23 @@ textureloader.load(
   }
 );
 
-// ゴールの描画
+textureloader.load(
+  textureUrls[1],
+  function (texture) {
+    geometry = new BoxGeometry(24, 10, 0.5);
+    sphereMaterial = new MeshPhongMaterial();
+    sphereMaterial.map =texture;
+    goal = new Mesh(geometry, sphereMaterial);
+    goal.position.set(0,5,-200);
+    goalBoundingBox = new Box3().setFromObject(goal);
+    scene.add(goal);
+  },
+  undefined,
+  function (error) {
+    console.error(error);
+  }
+  
+);
 // ここに記述
 
 // センサの値の読み取り

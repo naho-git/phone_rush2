@@ -98,7 +98,7 @@ const textureUrls = [
 
 // 読み込む GLB モデルのパス
 const glbUrls = [
-  "models/player.glb", // プレイヤー
+  "models/running.glb", // プレイヤー
   "models/houses.glb", // 周りの建物
   "models/phone.glb" // スマホ
 ];
@@ -108,6 +108,20 @@ const textureloader = new TextureLoader();
 const glbloader = new GLTFLoader();
 
 // プレイヤーの描画
+glbloader.load(
+  glbUrls[0],
+  function (gltf) {
+    player = gltf.scene;
+    player.scale.set(3, 2, 3);
+    player.rotation.set(0, Math.PI, 0);
+    player.position.set(0, 0, 0);
+    scene.add(player);
+  },
+  undefined,
+  function (error) {
+    console.error(error);
+  }
+);
 // ここに記述
 
 // 建物の描画
@@ -130,6 +144,24 @@ glbloader.load(
 );
 
 // スマホの描画
+glbloader.load(
+  glbUrls[2],
+  function (gltf) {
+    for (let g = 1; g < 10; g++) {
+      model = gltf.scene.clone();
+      model.scale.set(15, 15, 15);
+      model.rotation.set(0, Math.PI / 4, Math.PI / 4);
+      const randomIndex = Math.floor(Math.random() * 3); // 0 、1 、2 のランダム
+      model.position.set(course[randomIndex], 2, -10 * g);
+      phone_list.push(model); // オブジェクトのバウンディングボックスを計算
+      scene.add(model);
+    }
+  },
+  undefined,
+  function (error) {
+    console.error(error);
+  }
+);
 // ここに記述
 
 // 障害物の描画

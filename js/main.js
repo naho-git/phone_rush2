@@ -107,7 +107,7 @@ const glbUrls = [
 const textureloader = new TextureLoader();
 const glbloader = new GLTFLoader();
 
-// プレイヤーの描画
+// スマホの描画
 // プレイヤーの描画
 glbloader.load(
   glbUrls[0],
@@ -247,20 +247,33 @@ document.addEventListener("DOMContentLoaded", function () {
   // 加速度センサの値の取得
   window.addEventListener("devicemotion", (dat) => {
     if (ios) {
-      // iOS の時
-      // ここに追加
+    // iOS の時
+      aX = dat.accelerationIncludingGravity.x || 0;
+      aY = dat.accelerationIncludingGravity.y || 0;
+      aZ = dat.accelerationIncludingGravity.z || 0;
     } else {
       // android の時
-      // ここに追加
+      aX = -1 * dat.accelerationIncludingGravity.x || 0;
+      aY = -1 * dat.accelerationIncludingGravity.y || 0;
+      aZ = -1 * dat.accelerationIncludingGravity.z || 0;
     }
   });
 
   // ジャイロセンサの値の取得
-  // ここに追加
+  window.addEventListener(
+    "deviceorientation",
+    (event) => {
+      alpha = event.alpha || 0;
+      beta = event.beta || 0;
+      gamma = event.gamma || 0;
+      console.log("Gyro:", alpha, beta, gamma);
+    },
+    false
+  );
 
   // 一定時間ごとに
   let graphtimer = window.setInterval(() => {
-    // ここに追加
+    displayData();
   }, 33);
 
   // 描画する関数
@@ -336,25 +349,20 @@ function animate() {
   const animationId = requestAnimationFrame(animate);
 
   // Mixer
-  // ここに追加
-  function animate(){
-    // ...
-    // Mixer
-    if (mixer) {
-      mixer.update(0.01); // 時間の経過量
-    }
-    // ...
+  if (mixer) {
+    mixer.update(0.03); // 時間の経過量
   }
 
   if (player) {
     // 移動関数の実行
-    // ここに追加
+    move();
     // ジャンプ関数の実行
     // ここに追加
     // 衝突判定関数の実行
     // ここに追加
     // カメラの移動
-    // ここに追加
+    camera.position.set(0, 8, player.position.z + 10);
+    camera.lookAt(new Vector3(0, 5, player.position.z));
   }
   renderer.render(scene, camera);
 }

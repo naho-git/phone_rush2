@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // プレイヤーの移動
 function move() {
-  // ここに追加
+  player.position.z -= 0.2;
 }
 
 // プレイヤーのジャンプ
@@ -337,6 +337,14 @@ function animate() {
 
   // Mixer
   // ここに追加
+  function animate(){
+    // ...
+    // Mixer
+    if (mixer) {
+      mixer.update(0.01); // 時間の経過量
+    }
+    // ...
+  }
 
   if (player) {
     // 移動関数の実行

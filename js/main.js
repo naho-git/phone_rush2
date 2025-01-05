@@ -98,7 +98,7 @@ const textureUrls = [
 
 // 読み込む GLB モデルのパス
 const glbUrls = [
-  "models/running.glb", // プレイヤー
+  "models/player.glb", // プレイヤー
   "models/houses.glb", // 周りの建物
   "models/phone.glb" // スマホ
 ];
@@ -108,6 +108,7 @@ const textureloader = new TextureLoader();
 const glbloader = new GLTFLoader();
 
 // プレイヤーの描画
+// プレイヤーの描画
 glbloader.load(
   glbUrls[0],
   function (gltf) {
@@ -115,6 +116,19 @@ glbloader.load(
     player.scale.set(3, 2, 3);
     player.rotation.set(0, Math.PI, 0);
     player.position.set(0, 0, 0);
+
+    // 追加
+    mixer = new AnimationMixer(player); // 解説 1
+    const runningAction = gltf.animations.find(
+      (animation) => animation.name === "running"
+    ); // 解説 2
+    if (runningAction) {
+      mixer.clipAction(runningAction).play(); // 解説 3
+    } else {
+      console.warn("Running animation not found in the model.");
+    }
+    // ここまで追加
+
     scene.add(player);
   },
   undefined,

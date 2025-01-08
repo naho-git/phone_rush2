@@ -303,7 +303,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // プレイヤーの移動
 function move() {
-  player.position.z -= 0.2;
+  if (player.position.z > -205) {
+    player.position.z -= 0.2;
+  }
   if (gamma > 20 && !isMoving) {
     if (index == 0 || index == 1) {
       isMoving = true;
@@ -354,6 +356,7 @@ function collision() {
   const playerBoundingBox = new Box3().setFromObject(playerBox);
   helper = new Box3Helper(playerBoundingBox, 0xff0000);
 
+
 // 障害物との衝突
 enemy_list = enemy_list.filter((enemy) => {
   const enemyBoundingBox = new Box3().setFromObject(enemy);
@@ -390,7 +393,9 @@ phone_list = phone_list.filter((phone) => {
     goalBoundingBox = new Box3().setFromObject(goal);
     if (playerBoundingBox.intersectsBox(goalBoundingBox)) {
       console.log("ゴール");
-      window.location.href = "./goal.html";
+      // window.location.href = "./goal.html";
+      let result = document.getElementById("end");
+    result.innerHTML ='おめでとう！';
     }
   }
 }
@@ -400,7 +405,10 @@ function animate() {
 
   // Mixer
   if (mixer) {
-    mixer.update(0.03); // 時間の経過量
+    if (player.position.z > -205){
+      mixer.update(0.03); // 時間の経過量
+    }
+
   }
 
   if (player) {

@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>レッドコーンに当たってしまったよ<!DOCTYPE html>
+    <h1>レッドコーンに当たってしまったよ！残念！<!DOCTYPE html>
     <html lang="ja">
     
     <head>
@@ -15,8 +15,23 @@
         <title>zannnenn</title>
     </head>
     <body>
-        <button id="top">トップへ戻る</button>
+        <button type=“button” onclick="location.href='index.html'" id="top">トップへ戻る</button>
+
+        <style>
+            #top{
+                border: 3px solid black;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                align-items: center;
+                margin: 0;
+            
+            /* ビューポートの高さに合わせる */
+                display: flex;
+                justify-content: center;
+            }
+        </style>
     </body>
-    </html>残念！！</h1>
+    </html>
 </body>
 </html>
